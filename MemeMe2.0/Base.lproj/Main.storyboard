@@ -12,7 +12,7 @@
         <!--Create-Edit Meme-->
         <scene sceneID="I1k-jV-bTy">
             <objects>
-                <viewController id="GAh-Rg-DBU" customClass="MemeEditorViewController" customModule="MemeMe2_0" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MemeEditorViewControllerID" id="GAh-Rg-DBU" customClass="MemeEditorViewController" customModule="MemeMe2_0" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WFT-jj-75f">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

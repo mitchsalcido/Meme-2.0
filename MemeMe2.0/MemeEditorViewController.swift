@@ -18,6 +18,9 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         print("default updateUIBlock")
     }
     
+    // non-nil means that meme is passed in to be edited..camera/album not implemented
+    var memeToBeEdited: Meme? = nil
+    
     // Misc constants
     let DEFAULT_SHARED_MEME_MESSAGE = "Check out my Meme !" // default text to share along with meme image
     let DEFAULT_PHOTO = "DefaultImage"          // name for default image

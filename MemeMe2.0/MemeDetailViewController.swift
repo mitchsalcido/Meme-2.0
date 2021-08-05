@@ -16,15 +16,31 @@ class MemeDetailViewController: UIViewController {
     // outlet to imageView to display meme
     @IBOutlet weak var imageView: UIImageView!
     
+    var editMemeBbi: UIBarButtonItem!
+    
     // Meme passed in
-    var meme: Meme? = nil
+    var meme: Meme!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // set the meme image
-        if let meme = meme, let image = meme.memedImage {
-            imageView.image = image
-        }
+        imageView.image = meme.memedImage
+
+        // edit button for editing into new meme
+        editMemeBbi = UIBarButtonItem(barButtonSystemItem: .edit,
+                                      target: self,
+                                      action: #selector(editMemeBbiPressed(_:)))
+        navigationItem.rightBarButtonItem = editMemeBbi
+    }
+    
+    @objc func editMemeBbiPressed(_ sender: UIBarButtonItem) {
+
+        let navController = UINavigationController()
+        let controller = storyboard?.instantiateViewController(identifier: "MemeEditorViewControllerID") as! MemeEditorViewController
+        
+        controller.memeToBeEdited = meme
+        navController.viewControllers = [controller]
+        present(navController, animated: true, completion: {})
     }
 }
