@@ -6,7 +6,7 @@
 //
 /*
  About UIViewController+Extensions.swift
- Extension to include UIAlertController creation using LocalizedError info
+ Extension to include , helpers, UIAlertController creation using LocalizedError info
  */
 
 import UIKit
@@ -15,16 +15,23 @@ extension UIViewController {
     
     // return saved memes array
     var memes: [Meme] {
-        let object = UIApplication.shared.delegate
-        let appDelegate = object as! AppDelegate
-        return appDelegate.savedMemes
+        return appDelegate().sentMemes
     }
     
     // save meme
     func saveMeme(_ meme:Meme) {
+        appDelegate().sentMemes.append(meme)
+    }
+    
+    // delete meme
+    func deleteMeme(_ index: Int) {
+        appDelegate().sentMemes.remove(at: index)
+    }
+    
+    // appDelegate
+    func appDelegate() -> AppDelegate {
         let object = UIApplication.shared.delegate
-        let appDelegate = object as! AppDelegate
-        appDelegate.savedMemes.append(meme)
+        return object as! AppDelegate
     }
     
     // create a Meme for test/debug
@@ -32,8 +39,8 @@ extension UIViewController {
         
         let originalImage = UIImage(named: "DebugOriginalImage")
         let memedImage = UIImage(named: "DebugMemedImage")
-        let topText = "TEST MEME TOP"
-        let bottomText = "TEXT MEME BOTTOM"
+        let topText = "THIS IS A MEME !"
+        let bottomText = "PRESS '+' TO CREATE NEW MEME"
         let meme = Meme(topText: topText,
                         bottomText: bottomText,
                         originalImage: originalImage,
@@ -42,6 +49,15 @@ extension UIViewController {
         return meme
     }
 
+    // enable/disable tabBarItems
+    func tabBarItemsEnabled(_ enable: Bool) {
+        
+        if let tabBarItems = self.tabBarController?.tabBar.items {
+            for tabBarItem in  tabBarItems {
+                tabBarItem.isEnabled = enable
+            }
+        }
+    }
     
     // create/show and alert using LocalizedError properties
     func showAlert(_ error: LocalizedError) {
@@ -56,15 +72,5 @@ extension UIViewController {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
-    }
-    
-    // enable/disable tabBarItems
-    func tabBarItemsEnabled(_ enable: Bool) {
-        
-        if let tabBarItems = self.tabBarController?.tabBar.items {
-            for tabBarItem in  tabBarItems {
-                tabBarItem.isEnabled = enable
-            }
-        }
     }
 }

@@ -16,7 +16,8 @@ class MemeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for _ in 0...10 {
+        // add a test meme
+        for _ in 0...0 {
             saveMeme(createDebugMeme())
         }
     }
@@ -76,5 +77,14 @@ extension MemeTableViewController {
         tabBarItemsEnabled(false)
         
         navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    // delete a sent meme
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            deleteMeme(indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
 }
