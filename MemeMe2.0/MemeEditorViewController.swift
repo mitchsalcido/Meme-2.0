@@ -438,28 +438,46 @@ extension MemeEditorViewController {
         uiView.backgroundColor = UIColor.clear
         
         // create top textField and configure
+        // 210806:1538 cleanup/abstraction per reviewer comment
         topTextField = UITextField()
-        uiView.addSubview(topTextField)
-        configureTextFields(textField: topTextField, defaultText: DEFAULT_TOP_TEXT)
-        let ttfLeading = topTextField.leadingAnchor.constraint(equalTo: uiView.leadingAnchor)
-        let ttfTrailing = topTextField.trailingAnchor.constraint(equalTo: uiView.trailingAnchor)
-        let ttfTop = topTextField.topAnchor.constraint(equalTo: uiView.topAnchor, constant: 20)
-        ttfLeading.isActive = true
-        ttfTrailing.isActive = true
-        ttfTop.isActive = true
-        
-        // create bottom textField and configure
-        bottomTextField = UITextField()
-        uiView.addSubview(bottomTextField)
-        configureTextFields(textField: bottomTextField, defaultText: DEFAULT_BOTTOM_TEXT)
-        let btfLeading = bottomTextField.leadingAnchor.constraint(equalTo: uiView.leadingAnchor)
-        let btfTrailing = bottomTextField.trailingAnchor.constraint(equalTo: uiView.trailingAnchor)
-        let btfTop = bottomTextField.bottomAnchor.constraint(equalTo: uiView.bottomAnchor, constant: -20)
-        btfLeading.isActive = true
-        btfTrailing.isActive = true
-        btfTop.isActive = true
+        anchorTextFieldToViewAndConfigure(textField: topTextField,
+                                          view: uiView,
+                                          anchorTop: true)
 
+        // create bottom textField and configure
+        // 210806:1538 cleanup/abstraction per reviewer comment
+        bottomTextField = UITextField()
+        anchorTextFieldToViewAndConfigure(textField: bottomTextField,
+                                          view: uiView,
+                                          anchorTop: false)
         return uiView
+    }
+    
+    // 210806:1520 Per reviewer comment, helper method for code abstraction
+    func anchorTextFieldToViewAndConfigure(textField: UITextField, view: UIView, anchorTop: Bool) {
+        /*
+         for a previously created textField and view, add textField as subview and anchor
+         to top or bottom... anchor to top if anchorTop is true, bottom if false. Config textField
+         */
+        view.addSubview(textField)
+        let leading = textField.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        let trailing = textField.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        
+        var text: String!
+        var constraint: NSLayoutConstraint!
+        if  anchorTop {
+            constraint = textField.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
+            text = DEFAULT_TOP_TEXT
+        } else {
+            constraint = textField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+            text = DEFAULT_BOTTOM_TEXT
+        }
+        
+        configureTextFields(textField: textField, defaultText: text)
+        
+        leading.isActive = true
+        trailing.isActive = true
+        constraint.isActive = true
     }
     
     // configure a textField with default config
