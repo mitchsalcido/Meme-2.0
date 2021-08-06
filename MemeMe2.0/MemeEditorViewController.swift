@@ -595,10 +595,9 @@ extension MemeEditorViewController {
 
     // remove notifications for keyboard
     func unsubscribeToKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        // 210806:1615 Update per Udacity reviewer comment
+        NotificationCenter.default.removeObserver(self)
     }
     
     // keyboard about to show
