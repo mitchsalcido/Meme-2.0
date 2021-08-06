@@ -101,7 +101,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         super.viewDidLoad()
 
         // configure App and initial UI state
-        self.navigationController?.setToolbarHidden(false, animated: false)
+        navigationController?.setToolbarHidden(false, animated: false) // 210806:1502 remove self
         createBarButtonItems()
         
         // steer UI based on new meme or editing existing
@@ -361,15 +361,15 @@ extension MemeEditorViewController {
         switch state {
         case .defaultState:
             items = [flexBbi, albumBbi, flexBbi, cameraBbi, flexBbi]
-            self.navigationItem.setLeftBarButton(nil, animated: true)
-            self.navigationItem.setRightBarButton(doneBbi, animated: true)
+            navigationItem.setLeftBarButton(nil, animated: true) // 210806:1502 remove self
+            navigationItem.setRightBarButton(doneBbi, animated: true) // 210806:1502 remove self
         case .memeEditingState:
             items = [flexBbi, selectTextFontBbi, flexBbi, selectTextColorBbi, flexBbi, toggleContentAspectBbi, flexBbi]
-            self.navigationItem.setLeftBarButton(shareMemeBbi, animated: true)
-            self.navigationItem.setRightBarButton(cancelMemeEditingBbi, animated: true)
+            navigationItem.setLeftBarButton(shareMemeBbi, animated: true) // 210806:1502 remove self
+            navigationItem.setRightBarButton(cancelMemeEditingBbi, animated: true) // 210806:1502 remove self
         }
         
-        self.setToolbarItems(items, animated: true)
+        setToolbarItems(items, animated: true) // 210806:1502 remove self
     }
     
     // update UI meme editing state (tool/nav bar buttons)

@@ -26,7 +26,7 @@ class MemeTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         // update table
-        self.tableView.reloadData()
+        tableView.reloadData() // 210806:1502 remove self
         
         // update enable state of tabBar items
         tabBarItemsEnabled(true)

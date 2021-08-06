@@ -22,7 +22,7 @@ class MemeCollectionViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         
         // update collection
-        self.collectionView.reloadData()
+        collectionView.reloadData() // 210806:1502 remove self
         
         // update enable state of tabBar items
         tabBarItemsEnabled(true)
