@@ -103,7 +103,12 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         // configure App and initial UI state
         self.navigationController?.setToolbarHidden(false, animated: false)
         createBarButtonItems()
-        updateUI(.defaultState)
+        
+        if let _ = memeToBeEdited {
+            updateUI(.memeEditingState)
+        } else {
+            updateUI(.defaultState)
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
