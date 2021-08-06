@@ -52,8 +52,9 @@ extension UIView {
         /*
          create and return a UIImage rendered from UIView
          */
-        UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, UIScreen.main.scale)
-        drawHierarchy(in: self.bounds, afterScreenUpdates: true)
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, // 210806:1512 remove self
+                                               UIScreen.main.scale)
+        drawHierarchy(in: bounds, afterScreenUpdates: true) // 210806:1512 remove self
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
