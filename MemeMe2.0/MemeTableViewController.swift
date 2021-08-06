@@ -6,7 +6,7 @@
 //
 /*
  About MemeTableViewController.swift:
- UITableViewController subclass. Used to present history of sent memes in a tableView. User can select meme in table for a detailed view. "+" button in navBar to create a new meme.
+ UITableViewController subclass. Used to present history of sent memes in a tableView. User can select meme in table for a detailed view. "+" button in navBar to create a new meme. Swipe to delete implemented
  */
 
 import UIKit
@@ -16,7 +16,7 @@ class MemeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // add a test meme
+        // add a sample meme
         for _ in 0...0 {
             saveMeme(createDebugMeme())
         }
@@ -32,17 +32,21 @@ class MemeTableViewController: UITableViewController {
         tabBarItemsEnabled(true)
     }
     
+    // invoke MemeEditor
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // segue to meme detail view.
-        let navController = segue.destination as! UINavigationController
-        let controller = navController.viewControllers[0] as! MemeEditorViewController
-        
-        // set block in controller. Used when .pagesheet modal mode is presented..
-        // ..required for reloading tableView since viewWillAppear is not called
-        // when pageSheet is swiped down to dismiss
-        controller.updateUIBlock = {(_ meme: Meme?) -> Void in
-            self.tableView.reloadData()
+        if segue.identifier == "TableToMemeEditorSegueID" {
+         
+            // segue to meme detail view.
+            let navController = segue.destination as! UINavigationController
+            let controller = navController.viewControllers[0] as! MemeEditorViewController
+            
+            // set block in controller. Used when .pagesheet modal mode is presented..
+            // ..required for reloading tableView since viewWillAppear is not called
+            // when pageSheet is swiped down to dismiss
+            controller.updateUIBlock = {(_ meme: Meme?) -> Void in
+                self.tableView.reloadData()
+            }
         }
     }
 }
@@ -82,6 +86,7 @@ extension MemeTableViewController {
     // delete a sent meme
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
+        // delete meme from savedMemes and delete row
         if editingStyle == .delete {
             deleteMeme(indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)

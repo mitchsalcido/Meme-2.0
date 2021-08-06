@@ -13,10 +13,12 @@ import UIKit
 
 class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
-    // completion block passed from table/collection VC..used to update UI (tableView, collectionView, meme detail) upon dismissal
+    // completion block passed from table/collection VC..used to update UI (tableView, collectionView, meme detail) upon
+    // dismissal after meme saved. Implemented to accomodate .pagesheet modal presentation style which can result in
+    // viewWillAppear not firing when parentVC appears
     var updateUIBlock: ((Meme?) -> Void)!
         
-    // non-nil means that meme is passed in to be edited..camera/album not implemented
+    // non-nil means that meme is passed in to be edited..camera/album not implemented. Steers UI appearance
     var memeToBeEdited: Meme? = nil
     
     // Misc constants
@@ -102,9 +104,12 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         self.navigationController?.setToolbarHidden(false, animated: false)
         createBarButtonItems()
         
+        // steer UI based on new meme or editing existing
         if let _ = memeToBeEdited {
+            // editing existing
             updateUI(.memeEditingState)
         } else {
+            // new meme
             updateUI(.defaultState)
         }
     }
@@ -221,6 +226,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         present(controller, animated: true, completion: {})
     }
     
+    // change aspect of meme
     @objc func toggleFillFitPhoto(_ sender: UIBarButtonItem) {
         
         // Action for Fill/Fit BarButtonItem. Handles swapping the aspect of the Meme between aspectFit and aspectFill.
@@ -236,6 +242,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         updateBackingViewFrame()
     }
     
+    // change text color or font
     @objc func fontColorBbiPressed(_ sender: UIBarButtonItem) {
         
         // update text font or color.
@@ -364,7 +371,7 @@ extension MemeEditorViewController {
         self.setToolbarItems(items, animated: true)
     }
     
-    // update UI meme editing state
+    // update UI meme editing state (tool/nav bar buttons)
     func updateUI(_ state: MemeEditingState) {
         
         // config toolbar

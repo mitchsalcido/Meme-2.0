@@ -34,7 +34,7 @@ extension UIViewController {
         return object as! AppDelegate
     }
     
-    // create a Meme for test/debug
+    // create a Meme for sample/test/debug
     func createDebugMeme() -> Meme {
         
         let originalImage = UIImage(named: "DebugOriginalImage")

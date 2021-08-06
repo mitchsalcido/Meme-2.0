@@ -34,13 +34,18 @@ class MemeDetailViewController: UIViewController {
         navigationItem.rightBarButtonItem = editMemeBbi
     }
     
+    // edit the meme
     @objc func editMemeBbiPressed(_ sender: UIBarButtonItem) {
 
-        let navController = UINavigationController()
+        // create controller in a navVC
         let controller = storyboard?.instantiateViewController(identifier: "MemeEditorViewControllerID") as! MemeEditorViewController
-        
+        let navController = UINavigationController()
+        navController.viewControllers = [controller]
+
+        // assign meme
         controller.memeToBeEdited = meme
 
+        // block to invoke upon saving meme... update imageView with edited meme
         controller.updateUIBlock = {(_ meme: Meme?) -> Void in
             if let editedMeme = meme {
                 self.meme = editedMeme
@@ -48,7 +53,7 @@ class MemeDetailViewController: UIViewController {
             }
         }
         
-        navController.viewControllers = [controller]
+        // present
         present(navController, animated: true, completion: {})
     }
 }

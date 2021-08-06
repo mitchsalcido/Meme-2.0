@@ -147,7 +147,7 @@
                     <navigationItem key="navigationItem" title="Sent Memes" id="urJ-OR-Kb6">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="DSQ-ob-j4P">
                             <connections>
-                                <segue destination="GOM-CM-dqh" kind="presentation" id="k09-Ga-88w"/>
+                                <segue destination="GOM-CM-dqh" kind="presentation" identifier="TableToMemeEditorSegueID" id="k09-Ga-88w"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -221,7 +221,7 @@
                     <navigationItem key="navigationItem" title="Sent Memes" id="e9k-eN-h7A">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="e0t-hv-Khp">
                             <connections>
-                                <segue destination="GOM-CM-dqh" kind="presentation" id="XLq-EZ-UBg"/>
+                                <segue destination="GOM-CM-dqh" kind="presentation" identifier="CollectionToMemeEditorSegueID" id="XLq-EZ-UBg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

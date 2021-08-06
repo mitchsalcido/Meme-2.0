@@ -9,6 +9,7 @@ import UIKit
 
 extension UIImageView {
     
+    // return scaled rect for an image withing an imageView
     func imageFrame() -> CGRect? {
         /*
          returns a CGRect (frame) that is the scaled frame of the image within the

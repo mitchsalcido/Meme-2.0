@@ -19,6 +19,7 @@ struct Meme {
     let memedImage: UIImage?
     
     // properties for text attrib, text color..used when editing a sent meme
+    // corresponds to array index of text color and attribs
     let fontIndex: Int?
     let colorIndex: Int?
 }

@@ -40,17 +40,21 @@ class MemeCollectionViewController: UICollectionViewController {
         layout.invalidateLayout()
     }
     
+    // invoke MemeEditor
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // segue to meme detail view.
-        let navController = segue.destination as! UINavigationController
-        let controller = navController.viewControllers[0] as! MemeEditorViewController
-        
-        // set block in controller. Used when .pagesheet modal mode is presented..
-        // ..required for reloading tableView since viewWillAppear is not called
-        // when pageSheet is swiped down to dismiss
-        controller.updateUIBlock = {(_ meme: Meme?) -> Void in
-            self.collectionView.reloadData()
+        if segue.identifier == "CollectionToMemeEditorSegueID" {
+         
+            // segue to meme detail view.
+            let navController = segue.destination as! UINavigationController
+            let controller = navController.viewControllers[0] as! MemeEditorViewController
+            
+            // set block in controller. Used when .pagesheet modal mode is presented..
+            // ..required for reloading tableView since viewWillAppear is not called
+            // when pageSheet is swiped down to dismiss
+            controller.updateUIBlock = {(_ meme: Meme?) -> Void in
+                self.collectionView.reloadData()
+            }
         }
     }
 }
