@@ -502,50 +502,63 @@ extension MemeEditorViewController {
     func createBarButtonItems() {
         
         // done with Meme Editor
-        doneBbi = UIBarButtonItem(barButtonSystemItem: .done,
-                                  target: self,
-                                  action: #selector(doneBbiPressed(_:)))
-        
+        // 210806:1600 Use abstracted function per Udacity review
+        doneBbi = createBarButtonItemWithSystemItem(item: .done,
+                                                    selector: #selector(doneBbiPressed(_:)))
         // cancel editing meme
-        cancelMemeEditingBbi = UIBarButtonItem(barButtonSystemItem: .cancel,
-                                               target: self,
-                                               action: #selector(cancelEditingMemeBbiPressed(_:)))
-        
+        // 210806:1600 Use abstracted function per Udacity review
+        cancelMemeEditingBbi = createBarButtonItemWithSystemItem(item: .cancel,
+                                                                 selector: #selector(cancelEditingMemeBbiPressed(_:)))
         // share meme
-        shareMemeBbi = UIBarButtonItem(barButtonSystemItem: .action,
-                                       target: self,
-                                       action:#selector(shareMemeBbiPressed(_:)))
+        // 210806:1600 Use abstracted function per Udacity review
+        shareMemeBbi = createBarButtonItemWithSystemItem(item: .action,
+                                                         selector: #selector(shareMemeBbiPressed(_:)))
         
         // invoke imagePicker with camera as image source
-        cameraBbi = UIBarButtonItem(barButtonSystemItem: .camera,
-                                    target: self,
-                                    action: #selector(retrievePhoto(_:)))
+        // 210806:1600 Use abstracted function per Udacity review
+        cameraBbi = createBarButtonItemWithSystemItem(item: .camera,
+                                                      selector: #selector(retrievePhoto(_:)))
         // camer enable. Verify iOS device has camera
         cameraBbi.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
         // invoke imagePicker with photo album as image source
-        albumBbi = UIBarButtonItem(title: ALBUM_BBI_NAME,
-                                   style: .plain,
-                                   target: self,
-                                   action: #selector(retrievePhoto(_:)))
+        // 210806:1609 Use abstracted function per Udacity review
+        albumBbi = createBarButtonItemWithTitle(title: ALBUM_BBI_NAME,
+                                                selector: #selector(retrievePhoto(_:)))
                
         // toggle the meme image, aspectFit <-> aspectFill
-        toggleContentAspectBbi = UIBarButtonItem(title: PHOTO_ASPECT_FILL,
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(toggleFillFitPhoto(_:)))
+        // 210806:1609 Use abstracted function per Udacity review
+        toggleContentAspectBbi = createBarButtonItemWithTitle(title: PHOTO_ASPECT_FILL,
+                                                              selector: #selector(toggleFillFitPhoto(_:)))
         
         // select text font
-        selectTextFontBbi = UIBarButtonItem(title: FONT_BBI_NAME,
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(fontColorBbiPressed(_:)))
+        // 210806:1609 Use abstracted function per Udacity review
+        selectTextFontBbi = createBarButtonItemWithTitle(title: FONT_BBI_NAME,
+                                                         selector: #selector(fontColorBbiPressed(_:)))
         
         // select text color
-        selectTextColorBbi = UIBarButtonItem(title: COLOR_BBI_NAME,
-                                             style: .plain,
-                                             target: self,
-                                             action: #selector(fontColorBbiPressed(_:)))
+        // 210806:1609 Use abstracted function per Udacity review
+        selectTextColorBbi = createBarButtonItemWithTitle(title: COLOR_BBI_NAME,
+                                                          selector: #selector(fontColorBbiPressed(_:)))
+    }
+    
+    // create and return UIBarButtonItem with title
+    // 210806:1604 Per Udacity review, abstract common code into single function
+    func createBarButtonItemWithTitle( title: String, selector: Selector) -> UIBarButtonItem {
+        let bbi = UIBarButtonItem(title: title,
+                                  style: .plain,
+                                  target: self,
+                                  action: selector)
+        return bbi
+    }
+    
+    // create and return UIBarButtonItem with system item
+    // 210806:1604 Per Udacity review, abstract common code into single function
+    func createBarButtonItemWithSystemItem( item: UIBarButtonItem.SystemItem, selector: Selector) -> UIBarButtonItem {
+        let bbi = UIBarButtonItem(barButtonSystemItem: item,
+                                  target: self,
+                                  action: selector)
+        return bbi
     }
     
     // create a textAttribute
