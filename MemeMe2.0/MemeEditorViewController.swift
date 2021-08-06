@@ -489,6 +489,7 @@ extension MemeEditorViewController {
         textField.text = defaultText
         textField.autocapitalizationType = .allCharacters
         textField.borderStyle = .none
+        textField.adjustsFontSizeToFitWidth = true // 210806:1542 Add per reviewer comment
         
         // assign text attrib. Use default at index 0 from arrays
         let textAttibutes = createTextAttribute(name: textAttributeNameArray[0],
