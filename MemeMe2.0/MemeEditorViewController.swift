@@ -169,6 +169,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
                         // save meme
                         self.saveMeme(meme)
                         
+                        
                         // dismiss
                         self.dismiss(animated: true, completion: {
                             if self.memeToBeEdited == nil {
