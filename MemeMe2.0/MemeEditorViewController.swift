@@ -13,11 +13,9 @@ import UIKit
 
 class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
-    // completion block passed from table/collection VC..used to update UI (tableView, collectionView) upon dismissal
-    var updateUIBlock = {
-        print("default updateUIBlock")
-    }
-    
+    // completion block passed from table/collection VC..used to update UI (tableView, collectionView, meme detail) upon dismissal
+    var updateUIBlock: ((Meme?) -> Void)!
+        
     // non-nil means that meme is passed in to be edited..camera/album not implemented
     var memeToBeEdited: Meme? = nil
     
@@ -154,21 +152,25 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
                 //  Verify operation complete before saving.
                 if completed {
                     
-                    // Verify good data before saving
                     if let topText = self.topTextField.text,
-                       let bottomText = self.bottomTextField.text,
-                       let originalImage = self.originalImage {
+                       let bottomText = self.bottomTextField.text {
                         
                         let meme = Meme(topText: topText,
                                         bottomText: bottomText,
-                                        originalImage: originalImage,
-                                        memedImage: memedImage)
+                                        originalImage: self.originalImage,
+                                        memedImage: memedImage,
+                                        fontIndex: self.fontIndex,
+                                        colorIndex: self.colorIndex)
                         // save meme
                         self.saveMeme(meme)
                         
                         // dismiss
                         self.dismiss(animated: true, completion: {
-                            self.updateUIBlock()
+                            if self.memeToBeEdited == nil {
+                                self.updateUIBlock(nil)
+                            } else {
+                                self.updateUIBlock(meme)
+                            }
                         })
                     }
                 }
@@ -189,9 +191,15 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
 
     @objc func cancelEditingMemeBbiPressed(_ sender: Any) {
 
-        // Action for Cancel BarButtonItem. Removes meme image currently being edited and restores app to default state
-        memeImageView.image = nil
-        updateUI(.defaultState)
+        // Steer to appropriate.
+        if let _ = memeToBeEdited {
+            // currently editing an existing meme..simply dismiss MemeEditorVC
+            dismiss(animated: true, completion: {})
+        } else {
+            // editing a new meme..return to image selection
+            memeImageView.image = nil
+            updateUI(.defaultState)
+        }
     }
     
     @objc func retrievePhoto(_ sender: UIBarButtonItem) {
@@ -380,12 +388,25 @@ extension MemeEditorViewController {
             memeImageView.image = UIImage(named: DEFAULT_PHOTO)
         case .memeEditingState:
             // update memeImageView with currentImage (just selected/snapped photo)
+            // ..or alternatively with meme to be edited
+            if let image = memeToBeEdited?.originalImage {
+                originalImage = image
+            }
             memeImageView.image = originalImage
-            
+
             // create backingView. Default state if bad image or frame
             if let view = createBackingView(imageView: memeImageView) {
                 backingView = view
                 self.view.addSubview(backingView)
+                
+                // editing sent meme..duplicate text, font, color
+                if let meme = memeToBeEdited {
+                    topTextField.text = meme.topText
+                    bottomTextField.text = meme.bottomText
+                    fontIndex = meme.fontIndex ?? 0
+                    colorIndex = meme.colorIndex ?? 0
+                    updateTextFieldTextAttributes()
+                }
             } else {
                 updateUI(.defaultState)
                 showAlert(MemeEditorError.memeImageError)

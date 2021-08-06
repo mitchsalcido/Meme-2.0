@@ -49,7 +49,7 @@ class MemeCollectionViewController: UICollectionViewController {
         // set block in controller. Used when .pagesheet modal mode is presented..
         // ..required for reloading tableView since viewWillAppear is not called
         // when pageSheet is swiped down to dismiss
-        controller.updateUIBlock = {
+        controller.updateUIBlock = {(_ meme: Meme?) -> Void in
             self.collectionView.reloadData()
         }
     }

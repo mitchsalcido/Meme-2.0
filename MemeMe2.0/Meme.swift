@@ -17,4 +17,8 @@ struct Meme {
     let bottomText: String?
     let originalImage: UIImage?
     let memedImage: UIImage?
+    
+    // properties for text attrib, text color..used when editing a sent meme
+    let fontIndex: Int?
+    let colorIndex: Int?
 }

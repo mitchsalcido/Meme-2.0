@@ -23,10 +23,10 @@ class MemeDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // set the meme image
         imageView.image = meme.memedImage
-
+        
         // edit button for editing into new meme
         editMemeBbi = UIBarButtonItem(barButtonSystemItem: .edit,
                                       target: self,
@@ -40,6 +40,14 @@ class MemeDetailViewController: UIViewController {
         let controller = storyboard?.instantiateViewController(identifier: "MemeEditorViewControllerID") as! MemeEditorViewController
         
         controller.memeToBeEdited = meme
+
+        controller.updateUIBlock = {(_ meme: Meme?) -> Void in
+            if let editedMeme = meme {
+                self.meme = editedMeme
+                self.imageView.image = self.meme.memedImage
+            }
+        }
+        
         navController.viewControllers = [controller]
         present(navController, animated: true, completion: {})
     }

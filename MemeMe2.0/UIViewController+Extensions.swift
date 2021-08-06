@@ -40,11 +40,13 @@ extension UIViewController {
         let originalImage = UIImage(named: "DebugOriginalImage")
         let memedImage = UIImage(named: "DebugMemedImage")
         let topText = "THIS IS A MEME !"
-        let bottomText = "PRESS '+' TO CREATE NEW MEME"
+        let bottomText = "PRESS '+' TO CREATE"
         let meme = Meme(topText: topText,
                         bottomText: bottomText,
                         originalImage: originalImage,
-                        memedImage: memedImage)
+                        memedImage: memedImage,
+                        fontIndex: 0,
+                        colorIndex: 0)
         
         return meme
     }
